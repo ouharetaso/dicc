@@ -1,0 +1,6 @@
+.vscode
+build
+test/test
+test/test.o
+test/test.s
+dicc

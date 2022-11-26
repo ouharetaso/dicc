@@ -1,9 +1,9 @@
 CC			= gcc
 CXX			= g++
-CFLAGS		= -Wall -static
+CFLAGS		= -Wall 
 CXXFLAGS	=
 CPPFLAGS	= 
-LDFLAGS 	= -lSystem 
+LDFLAGS 	=  
 LIBS		= 
 
 TARGET		= $(notdir $(shell pwd))
