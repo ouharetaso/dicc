@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
+#include "token.h"
 
+extern Token *token;
 
 int main(int argc, char** argv){
 	if(argc != 2){
@@ -9,26 +11,21 @@ int main(int argc, char** argv){
 		return 1;
 	}
 
-	char *p = argv[1];
+	token = tokenize(argv[1]);
 
 	printf(".global _start\n");
 	printf(".align 2\n");
 	printf("_start:\n");
-	printf("	mov		x0, #%ld\n", strtol(p, &p, 10));
+	printf("	mov		x0, #%d\n", expect_number());
 
-	while(*p){
-		if(*p == '+'){
-			p++;
-			printf("	add		x0, x0, #%ld\n", strtol(p, &p, 10));
+	while(is_eof()){
+		if(consume('+')){
+			printf("	add		x0, x0, #%d\n", expect_number());
 			continue;
 		}
-		if(*p == '-'){
-			p++;
-			printf("	sub		x0, x0, #%ld\n", strtol(p, &p, 10));
-			continue;
-		}
-		fprintf(stderr, "unexpected character\n");
-		return 1;		
+
+		expect('-');
+		printf("	sub		x0, x0, #%d\n", expect_number());
 	}
 
 	printf("	ret\n");

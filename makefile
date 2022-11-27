@@ -1,6 +1,6 @@
 CC			= gcc
 CXX			= g++
-CFLAGS		= -Wall 
+CFLAGS		= -Wall -std=c99 -g
 CXXFLAGS	=
 CPPFLAGS	= 
 LDFLAGS 	=  
@@ -16,6 +16,8 @@ SUFFIXES	= .c .cpp .asm
 SRCS		= $(foreach suffix, $(SUFFIXES), $(wildcard $(SRCDIR)/*$(suffix)))
 OBJS		= $(addsuffix .o,$(addprefix $(OBJDIR)/, $(notdir $(basename $(SRCS) ) ) ) )
 
+INCOPT		= $(addprefix -I,$(INCDIR) )
+
 #$(warning $(SRCS))
 
 all:$(TARGET)
@@ -27,17 +29,17 @@ $(TARGET):$(OBJS)
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	@mkdir -p $(OBJDIR)
 	$(warning $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(CFLAGS) $(INCOPT) -c $< -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.cpp
 	@mkdir -p $(OBJDIR)
 	$(warning $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(INCOPT) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.asm
 	@mkdir -p $(OBJDIR)
 	$(warning $@)
-	$(CC) $(CFLAGS) -c $< -o $@
+	$(CC) $(INCOPT) $(CFLAGS) -c $< -o $@
 
 clean:
 	rm -rf $(OBJDIR) $(TARGET)
