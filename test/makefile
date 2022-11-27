@@ -1,10 +1,10 @@
 CC			= gcc
 AS			= as
 CXX			= g++
-CFLAGS		= -Wall
+CFLAGS		= -Wall 
 CXXFLAGS	=
 CPPFLAGS	= 
-LDFLAGS 	= -lSystem -syslibroot `xcrun -sdk macosx --show-sdk-path` -e _start
+LDFLAGS 	= -static
 LIBS		= 
 
 TARGET		= $(notdir $(shell pwd))
@@ -18,7 +18,7 @@ $(TARGET):$(OBJS)
 	@ld -o $@ $(CPPFLAGS) $(LDFLAGS) $^
 
 $(OBJS):$(SRCS)
-	@as -o $@ $<
+	@as -o $@ $(CFLAGS) $(CPPFLAGS)  $<
 
 clean:
 	@rm $(OBJS) $(TARGET)

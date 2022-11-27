@@ -18,7 +18,7 @@ int main(int argc, char** argv){
 	printf("_start:\n");
 	printf("	mov		x0, #%d\n", expect_number());
 
-	while(is_eof()){
+	while(!is_eof()){
 		if(consume('+')){
 			printf("	add		x0, x0, #%d\n", expect_number());
 			continue;
@@ -28,6 +28,7 @@ int main(int argc, char** argv){
 		printf("	sub		x0, x0, #%d\n", expect_number());
 	}
 
-	printf("	ret\n");
+	printf("	mov		x8, #93\n");
+	printf("	svc		#0\n");
 	return 0;
 }
